@@ -1,7 +1,10 @@
-FROM python:3.8
+FROM python:3.8-slim
 
-WORKDIR /app
+# Copy the hello_world script
+COPY ../scripts/train.py /opt/ml/code/train.py
 
-COPY model/ model/
+# Set environment variables
+ENV SAGEMAKER_PROGRAM train.py
 
-ENTRYPOINT ["python", "model/train.py"]
+# Entry point
+ENTRYPOINT ["sh", "-c", "python /opt/ml/code/$SAGEMAKER_PROGRAM"]
