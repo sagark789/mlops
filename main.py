@@ -23,7 +23,7 @@ def main():
         # Placeholder role for local mode
         instance_type = 'local'
         output_path = 'file://./output'
-        train_data_path = 'file://./data/'
+        train_data_path = 'file://./data/train'
     else:
         role = os.getenv('SAGEMAKER_ROLE', 'arn:aws:iam::<your-account-id>:role/<your-sagemaker-role>')  # Replace with your actual SageMaker role ARN
         instance_type = 'ml.m5.large'
