@@ -1,15 +1,12 @@
 FROM python:3.8-slim
 
-# Install dependencies
-RUN pip install --upgrade pip
-RUN pip install sagemaker scikit-learn pandas
+# Install necessary libraries
+RUN pip install pandas scikit-learn
 
-# Copy your training and inference scripts
-COPY scripts/train.py /opt/ml/code/train.py
-COPY scripts/inference.py /opt/ml/code/inference.py
+# Copy your scripts
+COPY train.py /opt/ml/code/train.py
+COPY inference.py /opt/ml/code/inference.py 
+COPY main.py /opt/ml/code/main.py
 
-# Set environment variables
-ENV SAGEMAKER_PROGRAM train.py
-
-# Entry point
-ENTRYPOINT ["sh", "-c", "python /opt/ml/code/$SAGEMAKER_PROGRAM"]
+# Define the entry point for the container
+ENTRYPOINT ["python", "/opt/ml/code/main.py"]

@@ -5,10 +5,12 @@
             "name": "Python: Train (Local)",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/scripts/train.py",
+            "program": "${workspaceFolder}/main.py",
             "console": "integratedTerminal",
             "env": {
-                "SAGEMAKER_PROGRAM": "train.py"
+                "SAGEMAKER_PROGRAM": "train.py", 
+                "SAGEMAKER_ROLE": "arn:aws:iam::609324725328:role/sagemaker-maven",
+                "DEPLOYMENT_TYPE": "cloud"
             },
             "args": [
                 "--train", "${workspaceFolder}/data/train",
@@ -51,7 +53,9 @@
             },
             "containerName": "sagemaker-train",
             "env": {
-                "SAGEMAKER_PROGRAM": "train.py"
+                "SAGEMAKER_PROGRAM": "train.py", 
+                "SAGEMAKER_ROLE": "arn:aws:iam::609324725328:role/sagemaker-maven",
+                "DEPLOYMENT_TYPE": "cloud"
             }
         },
         {
