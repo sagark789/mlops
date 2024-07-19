@@ -144,6 +144,8 @@ Default output format: json
            docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/your-repo:latest
 
    ```
+   <img width="1440" alt="image" src="https://github.com/user-attachments/assets/9aea2264-2a82-4aa6-9be8-28e157c4faf1">
+
 3. **Execute the Build Locally:**
 
    * Run the build workflow locally to ensure it works as expected.
