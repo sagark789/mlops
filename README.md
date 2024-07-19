@@ -24,8 +24,10 @@
      ![1721392586662](image/README/1721392586662.png)
 
      ![1721389902680](image/README/1721389902680.png)
-   * 
-   * ![1721389922484](image/README/1721389922484.png)
+     
+     ![1721389922484](image/README/1721389922484.png)
+  
+     ![1721392965864](image/README/1721392965864.png)
 2. **Configure AWS CLI with IAM User Credentials:**
    * Install **[AWS CLI](https://aws.amazon.com/cli/)**.
    * Run `aws configure` and input the IAM user’s access key, secret key, default region, and output format.
@@ -36,14 +38,12 @@ AWS Secret Access Key:
 Default region name: us-east-2
 Default output format: json
 ```
-
-    ![1721392965864](image/README/1721392965864.png)
-
 ![1721392999457](image/README/1721392999457.png)
 
 ### 3. Project Structure
 
 1. **Create Project Files and Folders:**
+   * `main.py`: This is your main code that controls the entry into training and inference scripts:
    * `training.py`: Your main training script.
    * `requirements.txt`: List of dependencies.
    * `inference.py`: Your main inference script.
@@ -53,6 +53,7 @@ Default output format: json
    * Place the dataset in the `data/` folder.
 3. **Install Dependencies:**
    * Install the dependencies listed in `requirements.txt` within your virtual environment.
+     ```pip install -r requirements.txt```
 4. **Run the Training Script:**
    * Ensure `training.py` runs successfully in your environment.
 
