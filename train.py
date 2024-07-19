@@ -13,9 +13,14 @@ warnings.filterwarnings("ignore")
 def main(args):
     # Load training data
     train_data_path = os.path.join(args.train, 'train.csv')
-    print(args.train)
-    # train_data_path = os.path.join('data','train','train.csv')
-    
+    output_dir = '/opt/ml/model'
+
+    environment = os.getenv('ENVIRONMENT', 'local')
+
+    if environment == 'local':
+        train_data_path = 'data/train/train.csv'
+        output_dir = 'output'
+
     data = pd.read_csv(train_data_path)
     
     # Preprocess data (example for Titanic dataset)
@@ -50,9 +55,6 @@ def main(args):
     print(f'Validation Accuracy: {accuracy}')
     
     # Save model
-    # output_dir = 'output'
-
-    output_dir = '/opt/ml/model'
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     

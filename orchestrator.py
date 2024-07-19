@@ -21,8 +21,7 @@ training_job_config = {
     'TrainingJobName': training_job_name,
     'AlgorithmSpecification': {
         'TrainingImage': ecr_image,
-        'TrainingInputMode': 'File',
-        'ContainerArguments': ['--mode', 'train']
+        'TrainingInputMode': 'File'
     },
     'RoleArn': role_arn,
     'InputDataConfig': [

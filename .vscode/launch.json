@@ -1,86 +1,16 @@
 {
     "version": "0.2.0",
     "configurations": [
-        {
-            "name": "Python: Train (Local)",
-            "type": "python",
-            "request": "launch",
-            "program": "${workspaceFolder}/main.py",
-            "console": "integratedTerminal",
-            "env": {
-                "SAGEMAKER_PROGRAM": "train.py", 
-                "SAGEMAKER_ROLE": "arn:aws:iam::609324725328:role/sagemaker-maven",
-                "DEPLOYMENT_TYPE": "cloud"
-            },
-            "args": [
-                "--train", "${workspaceFolder}/data/train",
-                "--model-dir", "${workspaceFolder}/output/"
-            ]
-        },
-        {
-            "name": "Python: Inference (Local)",
-            "type": "python",
-            "request": "launch",
-            "program": "${workspaceFolder}/scripts/inference.py",
-            "console": "integratedTerminal",
-            "env": {
-                "SAGEMAKER_PROGRAM": "inference.py"
-            },
-            "args": [
-                "--model-dir", "${workspaceFolder}/output/model",
-                "--input", "${workspaceFolder}/data/inference",
-                "--output", "${workspaceFolder}/output"
-            ]
-        },
-        {
-            "name": "Docker: Train",
-            "type": "docker",
-            "request": "launch",
-            "platform": "python",
-            "python": {
-                "pathMappings": [
-                    {
-                        "localRoot": "${workspaceFolder}/scripts",
-                        "remoteRoot": "/opt/ml/code"
-                    }
-                ],
-                "projectType": "general"
-            },
-            "dockerServerReadyAction": {
-                "pattern": ".*",
-                "uriFormat": "http://localhost:5000",
-                "action": "openExternally"
-            },
-            "containerName": "sagemaker-train",
-            "env": {
-                "SAGEMAKER_PROGRAM": "train.py", 
-                "SAGEMAKER_ROLE": "arn:aws:iam::609324725328:role/sagemaker-maven",
-                "DEPLOYMENT_TYPE": "cloud"
-            }
-        },
-        {
-            "name": "Docker: Inference",
-            "type": "docker",
-            "request": "launch",
-            "platform": "python",
-            "python": {
-                "pathMappings": [
-                    {
-                        "localRoot": "${workspaceFolder}/scripts",
-                        "remoteRoot": "/opt/ml/code"
-                    }
-                ],
-                "projectType": "general"
-            },
-            "dockerServerReadyAction": {
-                "pattern": ".*",
-                "uriFormat": "http://localhost:5000",
-                "action": "openExternally"
-            },
-            "containerName": "sagemaker-inference",
-            "env": {
-                "SAGEMAKER_PROGRAM": "inference.py"
-            }
+      {
+        "name": "Python: Run main.py",
+        "type": "python",
+        "request": "launch",
+        "program": "${workspaceFolder}/main.py",
+        "args": ["--mode", "train", "--env", "local"],
+        "console": "integratedTerminal",
+        "env": {
+          "PYTHONPATH": "${workspaceFolder}"
         }
+      }
     ]
-}
+  } 
