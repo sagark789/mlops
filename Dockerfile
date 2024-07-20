@@ -1,7 +1,8 @@
 FROM python:3.8-slim
 
 # Install necessary libraries
-RUN pip install pandas scikit-learn
+COPY requirements.txt /opt/ml/code/requirements.txt
+RUN pip install -r /opt/ml/code/requirements.txt
 
 # Set environment variables
 ENV MODE="train"
