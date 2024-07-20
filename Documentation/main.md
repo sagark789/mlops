@@ -12,23 +12,24 @@ The `main.py` script performs the following key tasks:
 
 ### Script Breakdown
 
+- **import subprocess**: This module is used to run new applications or programs through Python code.
+- **import os**: This module provides a way to interact with the operating system and retrieve environment variables.
 ```python
 import subprocess
 import os
 ```
 
-- **import subprocess**: This module is used to run new applications or programs through Python code.
-- **import os**: This module provides a way to interact with the operating system and retrieve environment variables.
-
+- **environment = os.getenv("ENVIRONMENT", "local")**: Retrieves the `ENVIRONMENT` environment variable. If it's not set, defaults to `"local"`.
+- **mode = os.getenv("MODE", "train")**: Retrieves the `MODE` environment variable. If it's not set, defaults to `"train"`.
 ```python
 def main():
     environment = os.getenv("ENVIRONMENT", "local")
     mode = os.getenv("MODE", "train")
 ```
 
-- **environment = os.getenv("ENVIRONMENT", "local")**: Retrieves the `ENVIRONMENT` environment variable. If it's not set, defaults to `"local"`.
-- **mode = os.getenv("MODE", "train")**: Retrieves the `MODE` environment variable. If it's not set, defaults to `"train"`.
-
+- **train_path = "/opt/ml/code/train.py"**: Sets the default path for the training script.
+- **inference_path = "/opt/ml/code/inference.py"**: Sets the default path for the inference script.
+- **if environment == "local"**: Adjusts the paths for local execution.
 ```python
     train_path = "/opt/ml/code/train.py"
     inference_path = "/opt/ml/code/inference.py"
@@ -38,10 +39,8 @@ def main():
         inference_path = "inference.py"
 ```
 
-- **train_path = "/opt/ml/code/train.py"**: Sets the default path for the training script.
-- **inference_path = "/opt/ml/code/inference.py"**: Sets the default path for the inference script.
-- **if environment == "local"**: Adjusts the paths for local execution.
-
+- **if mode == "train"**: If the mode is `"train"`, it runs the training script.
+- **elif mode == "inference"**: If the mode is `"inference"`, it runs the inference script. Note that the inference functionality is currently a placeholder.
 ```python
     if mode == "train":
         subprocess.run(["python", train_path])
@@ -49,45 +48,9 @@ def main():
         subprocess.run(["python", inference_path])  # Placeholder for inference script
 ```
 
-- **if mode == "train"**: If the mode is `"train"`, it runs the training script.
-- **elif mode == "inference"**: If the mode is `"inference"`, it runs the inference script. Note that the inference functionality is currently a placeholder.
+- **if __name__ == "__main__"**: This ensures that the `main()` function is called when the script is executed directly.
 
 ```python
 if __name__ == "__main__":
     main()
-```
-
-- **if __name__ == "__main__"**: This ensures that the `main()` function is called when the script is executed directly.
-
-## How to Use
-
-1. **Setting Environment Variables**:
-   - **ENVIRONMENT**: Determines where the script is running. It can be set to `"local"` for local development or `"cloud"` for deployment in a cloud environment.
-   - **MODE**: Specifies the mode of operation. It can be set to `"train"` to run the training script or `"inference"` to run the inference script.
-
-2. **Running the Script**:
-   - The script will automatically execute the appropriate Python script based on the environment and mode.
-
-### Example Commands
-
-- **Local Training**:
-  ```sh
-  ENVIRONMENT=local MODE=train python main.py
-  ```
-
-- **Cloud Inference**:
-  ```sh
-  ENVIRONMENT=cloud MODE=inference python main.py
-  ```
-
-### Integrating with Docker
-
-When using Docker, the environment variables are set in the Dockerfile and can also be overridden at runtime using the `-e` flag.
-
-- **Docker Run Example**:
-  ```sh
-  docker run -e MODE=train -e ENVIRONMENT=cloud my_mlops_image
-  ```
-
-By following this guide, you can understand the purpose of each part of the `main.py` script and how to configure and run it in different environments.
 ```
