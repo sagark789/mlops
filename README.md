@@ -44,7 +44,7 @@ Default output format: json
 
 1. **Create Project Files and Folders:**
    * `main.py`: This is your main code that controls the entry into training and inference scripts:
-   * `training.py`: Your main training script.
+   * `train.py`: Your main training script.
    * `requirements.txt`: List of dependencies.
    * `inference.py`: Your main inference script.
    * `data/`: Directory to store your dataset.
@@ -62,7 +62,7 @@ Default output format: json
 1. **Install Docker:**
    * Download and install Docker.
 2. **Create Dockerfile:**
-   * Write a Dockerfile to containerize your application.
+   * Write a Dockerfile to containerize your application. More detailed explanation about the Docker file can be found [here]([url](https://github.com/akshika47/mlops/blob/main/Documentation/Docker.md))
 3. **Build and Run Docker Image:**
    * Build the Docker image.
    * Run the Docker container and verify the results.
