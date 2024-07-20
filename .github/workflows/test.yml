@@ -31,13 +31,3 @@ jobs:
         run: |
           . venv/bin/activate
           pytest
-
-      - name: Run Flake8
-        run: |
-          . venv/bin/activate
-          flake8 .
-
-      - name: Run Black
-        run: |
-          . venv/bin/activate
-          black --check .

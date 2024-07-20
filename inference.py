@@ -1,1 +1,1 @@
-print('inference')
+print("inference")
