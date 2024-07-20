@@ -122,28 +122,6 @@ Default output format: json
 
    * Add a build workflow to automate building and pushing your Docker image to ECR.
 
-   ```yaml
-   name: CI/CD
-
-   on: [push]
-
-   jobs:
-     build:
-       runs-on: ubuntu-latest
-
-       steps:
-       - uses: actions/checkout@v2
-       - name: Set up Docker Buildx
-         uses: docker/setup-buildx-action@v1
-       - name: Login to Amazon ECR
-         run: |
-           aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
-       - name: Build and push
-         run: |
-           docker build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/your-repo:latest .
-           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/your-repo:latest
-
-   ```
    <img width="1440" alt="image" src="https://github.com/user-attachments/assets/9aea2264-2a82-4aa6-9be8-28e157c4faf1">
 
 3. **Execute the Build Locally:**
