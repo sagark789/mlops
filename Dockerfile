@@ -5,7 +5,7 @@ COPY requirements.txt /opt/ml/code/requirements.txt
 RUN pip install -r /opt/ml/code/requirements.txt
 
 # Set environment variables
-ENV MODE="train"
+ENV MODE="inference"
 ENV ENVIRONMENT="cloud"
 
 # Copy your scripts

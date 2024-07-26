@@ -4,5 +4,4 @@ ipython
 ipykernel
 numpy
 pytest
-flake8
-black
+numpy

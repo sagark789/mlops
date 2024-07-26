@@ -6,10 +6,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 import joblib
 import warnings
+import boto3
+import datetime
+from botocore.exceptions import ClientError
 
 # Suppress warnings
 warnings.filterwarnings("ignore")
-
 
 def main(args):
     # Load training data
@@ -63,9 +65,12 @@ def main(args):
 
     # Save model
     model_path = os.path.join(output_dir, "model.joblib")
-    joblib.dump(model, model_path)
-    print(f"Model saved to {model_path}")
+    model_columns = X_train.columns.tolist()
 
+    # Save the model and the column names
+    joblib.dump((model, model_columns), model_path)
+    # joblib.dump(model, model_path)
+    print(f"Model saved to {model_path}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
