@@ -45,7 +45,7 @@ def test_train_script():
     assert os.path.exists(model_path), "Model file was not created."
 
     # Load the model and check if it's a RandomForestClassifier
-    model = joblib.load(model_path)
+    model, model_columns = joblib.load(model_path)
     assert isinstance(
         model, RandomForestClassifier
     ), "The model is not a RandomForestClassifier."
