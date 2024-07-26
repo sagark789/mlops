@@ -5,3 +5,6 @@ ipykernel
 numpy
 pytest
 numpy
+boto3
+flake8
+black
