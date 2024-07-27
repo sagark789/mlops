@@ -1,24 +1,18 @@
-import subprocess
 import argparse
 import boto3
 import datetime
-import os
 
-def start_transform_job():
-    # Set up client
-    sagemaker_client = boto3.client('sagemaker')
+# Define model configuration
+model_name = 'titanic-model'
+transform_job_name = 'titanic-transform-job'
+region = "us-east-2"
+role_arn = "arn:aws:iam::609324725328:role/sagemaker-maven"
+ecr_image = "609324725328.dkr.ecr.us-east-2.amazonaws.com/maven_mlops_test"
+model_data_url = 's3://maven-mlops/output/custom-training-job-20240716230756/output/model.tar.gz'
+input_location = "s3://maven-mlops/data/train"
+output_location = "s3://maven-mlops/output"
 
-    # Define model configuration
-    model_name = 'titanic-model'
-    region = "us-east-2"
-    role_arn = "arn:aws:iam::609324725328:role/sagemaker-maven"
-    ecr_image = "609324725328.dkr.ecr.us-east-2.amazonaws.com/maven_mlops_test"
-    model_data_url = 's3://maven-mlops/output/custom-training-job-20240716230756/output/model.tar.gz'
-
-    # Define transform job configuration
-    transform_job_name = 'titanic-transform-job'
-    input_location = "s3://maven-mlops/data/train"
-    output_location = "s3://maven-mlops/output"
+def start_transform_job(sagemaker_client):
 
     # Create transform job
     response = sagemaker_client.create_transform_job(
@@ -50,16 +44,7 @@ def start_transform_job():
 
     print(f"CreateTransformJob response: {response}")
 
-def register_model():
-    # Set up client
-    sagemaker_client = boto3.client('sagemaker')
-
-    # Define model configuration
-    model_name = 'titanic-model'
-    region = "us-east-2"
-    role_arn = "arn:aws:iam::609324725328:role/sagemaker-maven"
-    ecr_image = "609324725328.dkr.ecr.us-east-2.amazonaws.com/maven_mlops_test"
-    model_data_url = 's3://maven-mlops/output/custom-training-job-20240716230756/output/model.tar.gz'
+def register_model(sagemaker_client):
 
     response = sagemaker_client.create_model(
         ModelName=model_name,
@@ -68,7 +53,7 @@ def register_model():
             'ModelDataUrl': model_data_url,
             'Environment': {
                 # Add any environment variables your model needs for inference
-                'SAGEMAKER_PROGRAM': 'inference.py',  # Assuming your entry point is named inference.py
+                'SAGEMAKER_PROGRAM': 'inference.py',
             }
         },
         ExecutionRoleArn=role_arn,
@@ -83,18 +68,7 @@ def register_model():
     print(f"Model '{model_name}' created with ARN: {response['ModelArn']}")
 
 
-def start_training_job():
-    # Define AWS credentials and region
-    region = "us-east-2"
-    role_arn = "arn:aws:iam::609324725328:role/sagemaker-maven"
-
-    # Define ECR image and S3 paths
-    ecr_image = "609324725328.dkr.ecr.us-east-2.amazonaws.com/maven_mlops_test"
-    s3_input_train = "s3://maven-mlops/data/train"
-    s3_output_path = "s3://maven-mlops/output"
-
-    # Initialize Boto3 SageMaker client
-    sagemaker_client = boto3.client("sagemaker", region_name=region)
+def start_training_job(sagemaker_client):
 
     # Define training job name
     training_job_name = (
@@ -112,7 +86,7 @@ def start_training_job():
                 "DataSource": {
                     "S3DataSource": {
                         "S3DataType": "S3Prefix",
-                        "S3Uri": s3_input_train,
+                        "S3Uri": input_location,
                         "S3DataDistributionType": "FullyReplicated",
                     }
                 },
@@ -120,7 +94,7 @@ def start_training_job():
                 "InputMode": "File",
             }
         ],
-        "OutputDataConfig": {"S3OutputPath": s3_output_path},
+        "OutputDataConfig": {"S3OutputPath": output_location},
         "ResourceConfig": {
             "InstanceType": "ml.m5.large",
             "InstanceCount": 1,
@@ -141,13 +115,13 @@ def main():
     parser.add_argument('--mode', type=str, choices=['train', 'inference', 'register'], required=True,
                         help='Mode to run the orchestrator: train or inference')
     args = parser.parse_args()
-
+    sagemaker_client = boto3.client('sagemaker')
     if args.mode == 'train':
-        start_training_job()
+        start_training_job(sagemaker_client)
     elif args.mode == 'inference':
-        start_transform_job()
+        start_transform_job(sagemaker_client)
     elif args.mode == 'register':
-        register_model()
+        register_model(sagemaker_client)
 
 if __name__ == "__main__":
     main()

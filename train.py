@@ -6,11 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 import joblib
 import warnings
-import boto3
-import datetime
-from botocore.exceptions import ClientError
 
-# Suppress warnings
 warnings.filterwarnings("ignore")
 
 def main(args):
@@ -26,7 +22,7 @@ def main(args):
 
     data = pd.read_csv(train_data_path)
 
-    # Preprocess data (example for Titanic dataset)
+    # Preprocess data
     # Handle missing values
     data["Age"].fillna(data["Age"].median(), inplace=True)
     data["Embarked"].fillna(data["Embarked"].mode()[0], inplace=True)
@@ -63,13 +59,11 @@ def main(args):
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
-    # Save model
     model_path = os.path.join(output_dir, "model.joblib")
     model_columns = X_train.columns.tolist()
 
     # Save the model and the column names
     joblib.dump((model, model_columns), model_path)
-    # joblib.dump(model, model_path)
     print(f"Model saved to {model_path}")
 
 if __name__ == "__main__":

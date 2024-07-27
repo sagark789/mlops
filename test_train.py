@@ -5,7 +5,6 @@ import pytest
 from train import main, argparse
 from sklearn.ensemble import RandomForestClassifier
 
-
 @pytest.fixture(scope="module", autouse=True)
 def setup_and_teardown():
     # Setup: Create sample data directory and file
@@ -27,7 +26,6 @@ def setup_and_teardown():
     if os.path.exists("output"):
         shutil.rmtree("output")
 
-
 def test_train_script():
     # Prepare arguments
     parser = argparse.ArgumentParser()
@@ -46,6 +44,8 @@ def test_train_script():
 
     # Load the model and check if it's a RandomForestClassifier
     model, model_columns = joblib.load(model_path)
+    
     assert isinstance(
         model, RandomForestClassifier
     ), "The model is not a RandomForestClassifier."
+    
