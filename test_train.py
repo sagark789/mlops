@@ -47,7 +47,7 @@ def test_train_script():
     model, model_columns = joblib.load(model_path)
     
     assert isinstance(
-        model, RandomForestClassifier
+        model, GradientBoostingClassifier
     ), "The model is not a RandomForestClassifier."
     
 def test_model_columns_saving():
