@@ -47,5 +47,5 @@ def test_train_script():
     # Load the model and check if it's a RandomForestClassifier
     model, model_columns = joblib.load(model_path)
     assert isinstance(
-        model, RandomForestClassifier
+        model_columns, RandomForestClassifier
     ), "The model is not a RandomForestClassifier."
