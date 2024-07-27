@@ -3,7 +3,8 @@ import joblib
 import shutil
 import pytest
 from train import main, argparse
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+import pandas as pd
 
 @pytest.fixture(scope="module", autouse=True)
 def setup_and_teardown():
@@ -49,3 +50,25 @@ def test_train_script():
         model, RandomForestClassifier
     ), "The model is not a RandomForestClassifier."
     
+def test_model_columns_saving():
+    # Prepare arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--train", type=str, default="test_data")
+    parser.add_argument(
+        "--n-estimators", type=int, default=10
+    )  # Use fewer estimators for quick testing
+    args = parser.parse_args(args=[])
+
+    # Run the training script
+    main(args)
+
+    # Check if the model file is created
+    model_path = "output/model.joblib"
+    assert os.path.exists(model_path), "Model file was not created."
+
+    # Load the model and check if it's a RandomForestClassifier
+    model, model_columns = joblib.load(model_path)
+    
+    model_columns_expected = ['Pclass', 'Age', 'SibSp', 'Parch', 'Fare', 'Sex_male', 'Embarked_Q', 'Embarked_S', 'Cabin_B', 'Cabin_C', 'Cabin_D', 'Cabin_E', 'Cabin_F', 'Cabin_G', 'Cabin_T', 'Cabin_U']
+
+    assert list(model_columns_expected) == list(model_columns)
