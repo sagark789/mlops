@@ -61,20 +61,41 @@
 3. **Download Image from ECR [optional]:**
     - Pull the Docker image from ECR and run it locally to verify.
 
-### 7. SageMaker Endpoint Integration
-1. **Train your model on SageMaker:**
-    -  Use the `orchestrator.py` to call SageMaker locally to train
-3. **Deploy Model on SageMaker:**
-    - Write and deploy your model to a SageMaker endpoint.
-4. **Call SageMaker Endpoint Locally:**
-    - Write code to call the SageMaker endpoint from your local environment.
-5. **Test the End-to-End Pipeline:**
-    - Test the entire workflow from local code execution to SageMaker inference.
+### 6. Writing Effective Test Cases
+1. **Setup and Teardown**: 
+   - Initialize any required data or environment before the test.
+   - Clean up afterward to maintain test isolation and prevent interference between tests.
+2. **Define the Test Scope**: 
+   - Clearly specify the functionality or feature the test case covers.
+   - Focus on specific inputs and expected outputs to ensure comprehensive testing.
+3. **Assertions and Validation**: 
+   - Use assertions to validate the expected outcomes.
+   - Ensure the test checks for correct functionality and handles potential edge cases effectively.
 
-### 8. GitHub Integration
-1. **Push Code to GitHub:**
-    - Commit and push your local project to GitHub.
-2. **Setup GitHub Actions for CI/CD:**
-    - Add a build workflow to automate building and pushing your Docker image to ECR.
-3. **Execute the Build Locally [optional]:**
-    - Run the build workflow locally to ensure it works as expected.
+
+### 7. GitHub Integration
+1. **Get AWS Keys and Set Up in GitHub Configuration**
+   - Obtain the necessary AWS access and secret keys.
+   - Add these keys as secrets in your GitHub repository under "Settings" > "Secrets and variables" > "Actions".
+2. **Create a Workflow to Run Tests**
+   - Set up a GitHub Actions workflow that installs dependencies, runs tests, and reports the results.
+3. **Create a Workflow to Build and Push the Image to ECR**
+   - Define a GitHub Actions workflow to build a Docker image, tag it, and push it to Amazon ECR (Elastic Container Registry).
+
+
+### 8. SageMaker Endpoint Integration
+
+1. **Write the Inference Script and Test Locally**
+   - Develop an inference script that handles data preprocessing, model prediction, and postprocessing.
+   - Test the script locally to ensure it produces the correct outputs with the expected inputs.
+
+2. **Register the Model**
+   - Save the trained model in a format compatible with Amazon SageMaker.
+   - Register the model with SageMaker, specifying the model artifact location and necessary configurations.
+
+3. **Invoke the Batch Transformation**
+   - Set up a SageMaker batch transformation job to process large datasets in batch mode.
+   - Define the input and output locations, and configure the job parameters to suit your needs.
+
+
+
